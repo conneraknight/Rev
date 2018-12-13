@@ -22,9 +22,32 @@ namespace MVCDemo.Repositories
             db.Database.EnsureCreated();
         }
 
-        public void CreateMovie(Movie movie) => throw new NotImplementedException();
-        public bool DeleteMovie(int id) => throw new NotImplementedException();
-        public void EditMovie(Movie movie) => throw new NotImplementedException();
+        public void CreateMovie(Movie movie)
+        {
+            _db.Movie.Add(new Data.Movie { Id = movie.Id, Title = movie.Title, ReleaseDate = movie.ReleaseDate,
+                CastMembers = movie.Cast.Select(c => new Data.CastMember { Name = c }).ToList() });
+        }
+        public bool DeleteMovie(int id)
+        {
+            Data.Movie m = _db.Movie.Find(id);
+            if (m != null)
+            {
+                _db.Movie.Remove(_db.Movie.Find(id));
+                return true;
+            }
+            return false;
+        }
+        public void EditMovie(Movie movie)
+        {
+            _db.Entry(_db.Movie.Find(movie.Id)).CurrentValues.SetValues(new Data.Movie
+            {
+                Id = movie.Id,
+                Title = movie.Title,
+                ReleaseDate = movie.ReleaseDate,
+                CastMembers = movie.Cast.Select(c => new Data.CastMember { Name = c }).ToList()
+            }
+            );
+        }
 
         public IEnumerable<Movie> GetAll()
         {

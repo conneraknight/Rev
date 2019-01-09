@@ -93,12 +93,12 @@ namespace MVCDemo.Controllers
                 // get a new Create page, but with the current ModelState errors.
                 return View();
             }
-            catch
-            {
-                // if we get any exception, go back to Create view
-                // (ideally we would provide a useful error message when the error is not in ModelState)
-                return View();
-            }
+            //catch(Exception)
+            //{
+            //    // if we get any exception, go back to Create view
+            //    // (ideally we would provide a useful error message when the error is not in ModelState)
+            //    return View();
+            //}
         }
 
         // GET: Movies/Edit/5
